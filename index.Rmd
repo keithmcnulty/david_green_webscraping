@@ -1,0 +1,95 @@
+---
+title: "David Green LinkedIn Scraper"
+resource_files:
+- R/global.R
+- R/controls.R
+- R/scraping_engine.R
+- R/download.R
+runtime: shiny
+output:
+  flexdashboard::flex_dashboard:
+    navbar:
+    - align: right
+      href: mailto:keith.mcnulty@gmail.com
+      icon: fa-envelope
+      title: Contact Author
+    - align: right
+      href: https://github.com/keithmcnulty/david_green_webscraping
+      icon: fa-github
+    - align: right
+      href: http://twitter.com/share?url=https://keith-mcnulty.shinyapps.io/david_green_webscraping
+      icon: fa-twitter
+      title: Share
+    orientation: rows
+    theme: cerulean
+    vertical_layout: scroll
+---
+
+```{r global, code = readLines('R/global.R')}
+
+# global settings
+
+```
+
+Sidebar {.sidebar data-width=300}
+----------------------------------------
+
+<br>
+Paste the URL to scrape below and click 'Go!'.  Note this is designed for David Green LinkedIn articles.
+<bl>
+<p>
+``` {r controls, code = readLines('R/controls.R')}
+
+# sidebar controls
+```
+
+
+Row {.tabset .tabset-fade data-height=2000}
+-----------------------------------------
+
+### `r renderText({paste(results()$article_title, "Author List")})`
+
+``` {r authors}
+
+shiny::renderTable(
+  results()[[2]]
+)
+
+
+
+```
+
+### `r renderText({paste(results()$article_title, "Article List")})`
+
+``` {r articles}
+
+shiny::renderTable(
+  results()[[3]]
+)
+
+
+
+```
+
+
+### `r renderText({paste(results()$article_title, "URL List")})`
+
+``` {r links}
+
+shiny::renderTable(
+  results()[[4]]
+)
+
+
+
+```
+
+
+``` {r scraping_engine, code = readLines('R/scraping_engine.R')}
+# scraping code
+```
+
+``` {r download, code = readLines('R/download.R')}
+# excel download code
+
+```
